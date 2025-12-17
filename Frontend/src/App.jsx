@@ -5,6 +5,7 @@ import TaglineSection from "./TaglineSection";
 
 const api = axios.create({
   baseURL: "http://localhost:8000",
+  baseURL: "https://inverntry.onrender.com",
 });
 
 function App() {
