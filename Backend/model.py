@@ -5,3 +5,8 @@ class product(BaseModel):
     description: str
     price: float
     quantity: int 
+    
+class user(BaseModel):
+    username: str
+    email: str | None = None 
+    full_name: str | None = None

@@ -12,8 +12,3 @@ class product(Base):
     description = Column(String, index=True)
     price = Column(Float)
     quantity = Column(Integer)
-
-
-
-
-# changed it to the mapped things told by chatgpt 

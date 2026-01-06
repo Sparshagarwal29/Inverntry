@@ -1,5 +1,7 @@
 from fastapi import FastAPI,Depends
+from typing import Annotated
 from fastapi.middleware.cors import CORSMiddleware  
+from fastapi.security import OAuth2PasswordBearer
 from model import product
 from database import sessionLocal,engine
 
@@ -9,6 +11,8 @@ import database_model
 
 app = FastAPI()
 
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "https://inverntry.vercel.app"],
@@ -17,6 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 database_model.Base.metadata.create_all(bind=engine) 
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 @app.get("/")
 async def root():
@@ -46,7 +53,7 @@ def init_db():
 init_db()
 
 @app.get("/products")
-def get_all_products (db: Session = Depends(get_db)):
+def get_all_products (db: Session = Depends(get_db),token: str = Depends(oauth2_scheme)):
     db_products = db.query(database_model.product).all()
     return db_products
 
